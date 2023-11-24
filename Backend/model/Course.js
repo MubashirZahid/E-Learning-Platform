@@ -24,12 +24,12 @@ const courseSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    // sections: [
-    //   {
-    //     type: mongoose.Schema.Types.ObjectId,
-    //     ref: "sections",
-    //   },
-    // ],
+    sections: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "sections",
+      },
+    ],
     isPublic: {
       type: Boolean,
       required: false,

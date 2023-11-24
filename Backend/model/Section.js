@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const sectionSchema = new mongoose.Schema({
   teacherID: {
     type: mongoose.Types.ObjectId,
-    ref: "Teacher",
+    ref: "teachers",
     required: true,
   },
   courseID: {
@@ -14,6 +14,7 @@ const sectionSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+
   lectures: [
     {
       type: mongoose.Types.ObjectId,
@@ -29,21 +30,22 @@ const sectionSchema = new mongoose.Schema({
   quizzes: [
     {
       type: mongoose.Types.ObjectId,
-      ref: "quizzes",
+      ref: "Quiz",
     },
   ],
 
   assignments: [
     {
       type: mongoose.Types.ObjectId,
-      ref: "assignments",
+      ref: "Assignment",
     },
   ],
-  review: {
-    type: mongoose.Types.ObjectId,
-    ref: "Review",
-    required: true,
-  },
+  reviews: [
+    {
+      type: mongoose.Types.ObjectId,
+      ref: "Review",
+    },
+  ],
 });
 
 const Section = mongoose.model("sections", sectionSchema);
