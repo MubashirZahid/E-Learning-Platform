@@ -111,6 +111,46 @@ class SubscriptionController {
     }
   }
 
+  async studentCourseList(req, res) {
+    try {
+      const { studentId } = req.params;
+  
+      // Check if studentId is provided
+      if (!studentId) {
+        return res
+          .status(HTTP_STATUS.BAD_REQUEST)
+          .json(failure("StudentId is required"));
+      }
+  
+      // Find the subscription for the student and populate the courses details
+      const subscription = await Subscription.findOne({ studentId })
+        .populate({
+          path: 'courses',
+          select: 'title description imageUrl', // Fields to select from Course model
+        })
+        .exec();
+  
+      if (!subscription) {
+        return res
+          .status(HTTP_STATUS.NOT_FOUND)
+          .json(failure("Subscription not found for the student"));
+      }
+  
+      // Extract populated course details from the subscription
+      const courses = subscription.courses;
+  
+      return res
+        .status(HTTP_STATUS.OK)
+        .json(success("Student's subscribed courses retrieved successfully", courses));
+    } catch (error) {
+      console.error(error);
+      return res
+        .status(HTTP_STATUS.INTERNAL_SERVER_ERROR)
+        .json(failure("Failed to retrieve student's subscribed courses"));
+    }
+  }
+  
+
   async removeFromSubscription(req, res) {
     try {
       const { studentId, courseId } = req.body;

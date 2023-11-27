@@ -17,6 +17,11 @@ router.post(
   SubscriptionController.addToSubscription
 );
 
+router.get(
+  "/api/studentCourseList/:studentId",
+  SubscriptionController.studentCourseList
+);
+
 // Remove from subscription
 router.delete(
   "/api/removeFromSubscription",

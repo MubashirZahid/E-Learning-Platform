@@ -11,34 +11,77 @@ const ejsRenderFile = promisify(ejs.renderFile);
 const { default: mongoose } = require("mongoose");
 
 class CourseController {
+  // async getAllCourses(req, res) {
+  //   try {
+  //     const { page = 1, limit = 5 } = req.query;
+  //     const pageNum = parseInt(page);
+  //     const limitNum = parseInt(limit);
+
+  //     if (isNaN(pageNum) || isNaN(limitNum)) {
+  //       return res
+  //         .status(HTTP_STATUS.UNPROCESSABLE_ENTITY)
+  //         .json(failure("Page and Limit must be valid numbers"));
+  //     }
+
+  //     const skipValue = (pageNum - 1) * limitNum;
+
+  //     // Fetch courses with pagination from the database
+  //     const courses = await Course.find()
+  //       .populate("teacherID", "name email")
+  //       .populate("enrolledStudents", "name email")
+  //       .skip(skipValue)
+  //       .limit(limitNum);
+
+  //     // const totalCourses = await Course.countDocuments();
+
+  //     res.status(HTTP_STATUS.OK).json({
+  //       message: "Courses retrieved successfully",
+  //       currentPage: pageNum,
+  //       totalPages: Math.ceil(courses.length / limitNum),
+  //       totalCourses: courses.length,
+  //       courses: courses,
+  //     });
+  //   } catch (error) {
+  //     res
+  //       .status(HTTP_STATUS.INTERNAL_SERVER_ERROR)
+  //       .json(failure("Failed to fetch courses", error));
+  //   }
+  // }
+
   async getAllCourses(req, res) {
     try {
-      const { page = 1, limit = 5 } = req.query;
+      const { page = 1, limit = 5, search } = req.query;
       const pageNum = parseInt(page);
       const limitNum = parseInt(limit);
-
+  
       if (isNaN(pageNum) || isNaN(limitNum)) {
         return res
           .status(HTTP_STATUS.UNPROCESSABLE_ENTITY)
           .json(failure("Page and Limit must be valid numbers"));
       }
-
+  
       const skipValue = (pageNum - 1) * limitNum;
-
-      // Fetch courses with pagination from the database
-      const courses = await Course.find()
+  
+      let query = Course.find();
+  
+      if (search) {
+        query = query.find({ title: { $regex: new RegExp(search, 'i') } });
+      }
+  
+      // Fetch courses with pagination and search from the database
+      const courses = await query
         .populate("teacherID", "name email")
         .populate("enrolledStudents", "name email")
         .skip(skipValue)
         .limit(limitNum);
-
-      // const totalCourses = await Course.countDocuments();
-
+  
+      const totalCourses = await Course.countDocuments(query);
+  
       res.status(HTTP_STATUS.OK).json({
         message: "Courses retrieved successfully",
         currentPage: pageNum,
-        totalPages: Math.ceil(courses.length / limitNum),
-        totalCourses: courses.length,
+        totalPages: Math.ceil(totalCourses / limitNum),
+        totalCourses: totalCourses,
         courses: courses,
       });
     } catch (error) {
@@ -47,6 +90,7 @@ class CourseController {
         .json(failure("Failed to fetch courses", error));
     }
   }
+  
 
   // Function to create a new course
   async createCourse(req, res) {

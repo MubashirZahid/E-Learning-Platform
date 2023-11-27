@@ -61,6 +61,45 @@ class CartController {
     }
   }
 
+  async studentCartList(req, res) {
+    try {
+      const { studentId } = req.params;
+  
+      // Check if studentId is provided
+      if (!studentId) {
+        return res
+          .status(HTTP_STATUS.BAD_REQUEST)
+          .json(failure("StudentId is required"));
+      }
+  
+      // Find the cart for the student and populate the courses details
+      const cart = await Cart.findOne({ studentId })
+        .populate({
+          path: 'courses',
+          select: 'title description imageUrl', // Fields to select from Course model
+        })
+        .exec();
+  
+      if (!cart || cart.courses.length === 0) {
+        return res
+          .status(HTTP_STATUS.NOT_FOUND)
+          .json(failure("Cart not found or empty for the student"));
+      }
+  
+      // Extract populated course details from the cart
+      const coursesInCart = cart.courses;
+  
+      return res
+        .status(HTTP_STATUS.OK)
+        .json(success("Student's cart retrieved successfully", coursesInCart));
+    } catch (error) {
+      console.error(error);
+      return res
+        .status(HTTP_STATUS.INTERNAL_SERVER_ERROR)
+        .json(failure("Failed to retrieve student's cart"));
+    }
+  }
+  
   async removeFromCart(req, res) {
     try {
       const { studentId, courseId } = req.body;
