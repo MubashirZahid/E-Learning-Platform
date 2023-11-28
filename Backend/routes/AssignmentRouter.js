@@ -1,11 +1,12 @@
 const express = require("express");
 const router = express.Router();
 const AssignmentController = require("../controller/AssignmentController");
-// const { isAdmin } = require("../middleware/authValidation");
+const { isAuthorized, isAdmin, isTeacher, isStudent } = require("../middleware/userValidation");
+
 // const upload = require("../database/files");
 
 // Create a quiz
-router.post("/api/createAssignment", AssignmentController.createAssignment);
+router.post("/api/createAssignment", isAuthorized, isTeacher, AssignmentController.createAssignment);
 
 // Get all students
 // router.get("/api/getAll", StudentController.getAllStudents);
@@ -16,6 +17,7 @@ router.post("/api/createAssignment", AssignmentController.createAssignment);
 // Delete a quiz by ID
 router.delete(
   "/api/deleteAssignment/:assignmentId",
+  isAuthorized, isTeacher,
   AssignmentController.deleteAssignment
 );
 

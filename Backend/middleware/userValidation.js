@@ -101,7 +101,7 @@ const isTeacher = (req, res, next) => {
       req.headers.authorization.split(" ")[1]
     );
 
-    if (role == 2) {
+    if (role == 3) {
       next();
     } else {
       return res
@@ -131,7 +131,7 @@ const isStudent = (req, res, next) => {
       req.headers.authorization.split(" ")[1]
     );
 
-    if (role == 3) {
+    if (role == 2) {
       next();
     } else {
       return res

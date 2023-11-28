@@ -1,0 +1,55 @@
+nav {
+  border-bottom: 1px solid grey;
+  margin-bottom: 20px;
+}
+
+nav > ul {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  list-style: none;
+}
+
+nav img {
+  height: 3em;
+  width: 5em;
+}
+
+nav input {
+  width: 30em;
+}
+
+input {
+  height: 2em;
+  border-radius: 10px;
+  border: 1px solid grey;
+}
+
+.nav-right-log-out {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  gap: 1em;
+}
+
+.nav-right-log-in {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  gap: 2em;
+}
+
+button {
+  border: 1px solid grey;
+  height: 3em;
+  width: 5em;
+}
+
+.primary-btn {
+  color: white;
+  background-color: teal;
+}
+.secondary-btn {
+  color: black;
+  background-color: white;
+}

@@ -1,0 +1,16 @@
+.cart-header {
+    display: flex; 
+    justify-content: space-between;
+    align-items: center;
+    padding: 1em;
+}
+.title {
+    font-size: x-large;
+    font-weight: 700;
+}
+.cart-list {
+    padding: 1em; 
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+}

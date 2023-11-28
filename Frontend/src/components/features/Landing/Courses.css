@@ -1,0 +1,41 @@
+.courses {
+    margin-top: 100px;
+    display: flex;
+    gap: 1em;
+  }
+  .card {
+    border: 1px solid grey;
+    border-radius: 10px;
+    height: 20em;
+    width: 25em;
+    display: flex;
+    flex-direction: column;
+    /* gap: 1em; */
+  }
+  .card > img {
+    width: 100%;
+    height: 6em;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+  }
+  .card-details {
+    padding: 1em;
+  }
+  .card-header {
+    font-weight: 700;
+    padding: 0em;
+    font-size: 2em;
+  }
+  .subtitle {
+    font-weight: 300;
+    font-size: 1em;
+  }
+  .rating {
+  }
+  .tag {
+    display: flex;
+    justify-content: center;
+    width: 6em;
+    background-color: #eceb98;
+  }
+  

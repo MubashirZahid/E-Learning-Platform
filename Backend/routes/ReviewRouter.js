@@ -2,16 +2,16 @@ const express = require("express");
 const router = express.Router();
 const ReviewController = require("../controller/ReviewController");
 
-// const { isAdmin } = require("../middleware/authValidation");
+const { isAuthorized, isAdmin, isTeacher, isStudent } = require("../middleware/userValidation");
 // const upload = require("../database/files");
 
 // Create a review
-router.post("/api/addToReview", ReviewController.addToReview);
+router.post("/api/addToReview",isAuthorized, isStudent, ReviewController.addToReview);
 
 // Update rating, review
-router.patch("/api/updateReview", ReviewController.updateReview);
+router.patch("/api/updateReview", isAuthorized, isStudent, ReviewController.updateReview);
 
-// Remove from subscription
-router.delete("/api/removeReview", ReviewController.removeReview);
+// Remove review
+router.delete("/api/removeReview", isAuthorized, isStudent, ReviewController.removeReview);
 
 module.exports = router;

@@ -1,11 +1,11 @@
 const express = require("express");
 const router = express.Router();
 const QuestionController = require("../controller/QuestionController");
-// const { isAdmin } = require("../middleware/authValidation");
+const { isAuthorized, isAdmin, isTeacher, isStudent } = require("../middleware/userValidation");
 // const upload = require("../database/files");
 
 // Create a question
-router.post("/api/addQuestion", QuestionController.addQuestion);
+router.post("/api/addQuestion", isAuthorized, isTeacher, QuestionController.addQuestion);
 
 // Get all students
 // router.get("/api/getAll", StudentController.getAllStudents);
@@ -13,9 +13,10 @@ router.post("/api/addQuestion", QuestionController.addQuestion);
 // Get a student by ID
 // router.get("/api/getOne/:id", StudentController.getOneById);
 
-// Delete a student by ID
+// Delete a question by ID
 router.delete(
   "/api/deleteQuestion/:questionId",
+  isAuthorized, isTeacher,
   QuestionController.deleteQuestion
 );
 

@@ -2,13 +2,14 @@ const express = require("express");
 const router = express.Router();
 const WishlistController = require("../controller/WishlistController");
 
-// const { isAdmin } = require("../middleware/authValidation");
+const { isAuthorized, isAdmin, isTeacher, isStudent } = require("../middleware/userValidation");
+
 // const upload = require("../database/files");
 
 // Create a wishlist
-router.post("/api/createWishlist", WishlistController.addToWishlist);
+router.post("/api/createWishlist", isAuthorized, isStudent, WishlistController.addToWishlist);
 
 // Remove from wishlist
-router.delete("/api/removeFromWishlist", WishlistController.removeFromWishlist);
+router.delete("/api/removeFromWishlist", isAuthorized, isStudent, WishlistController.removeFromWishlist);
 
 module.exports = router;

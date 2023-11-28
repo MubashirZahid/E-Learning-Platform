@@ -1,0 +1,29 @@
+.stats {
+    margin-top: 30px;
+    display: flex;
+    justify-content: space-around;
+    padding-bottom: 1em;
+    border-bottom: 1px solid grey;
+  }
+  .stat {
+    display: flex;
+    flex-direction: column;
+
+  }
+  .stat-circle {
+    font-size: 3em;
+    background-color: teal;
+    border: 1px solid black;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    width: 200px;
+    height: 200px;
+    align-items: center;
+  }
+  .stat-details{
+    display: flex;
+    justify-content: center;
+    padding-top: 1em;
+    font-size: 1em;
+  }
